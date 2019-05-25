@@ -5,6 +5,7 @@ using ExileNET.Enums;
 using ExileNET.Ladders;
 using ExileNET.Leagues;
 using ExileNET.Networking;
+using ExileNET.PVP;
 using Newtonsoft.Json.Linq;
 
 namespace ExileNET.API
@@ -25,7 +26,7 @@ namespace ExileNET.API
         /// </summary>
         /// <param name="nextChangeId">Optional Next Change ID</param>
         /// <returns></returns>
-        public async Task<Stash> GetPublicStashes(string nextChangeId = null)
+        public async Task<Stash> GetPublicStashesAsync(string nextChangeId = null)
         {
             var request = new Request(User_Agent);
             if (nextChangeId == null)
@@ -41,7 +42,7 @@ namespace ExileNET.API
         /// </summary>
         /// <param name="platform">The Desired Platform</param>
         /// <returns></returns>
-        public async Task<List<League>> GetAllLeagues(Platform platform = Platform.Pc)
+        public async Task<List<League>> GetAllLeaguesAsync(Platform platform = Platform.Pc)
         {
             var request = new Request(User_Agent);
 
@@ -66,7 +67,7 @@ namespace ExileNET.API
         /// <param name="season">The Chosen Season</param>
         /// <param name="platform">The Desired Platform</param>
         /// <returns></returns>
-        public async Task<List<League>> GetLeaguesBySeason(string season, Platform platform = Platform.Pc)
+        public async Task<List<League>> GetLeaguesBySeasonAsync(string season, Platform platform = Platform.Pc)
         {
             var request = new Request(User_Agent);
 
@@ -90,7 +91,7 @@ namespace ExileNET.API
         /// </summary>
         /// <param name="platform"></param>
         /// <returns></returns>
-        public async Task<List<League>> GetEventLeagues(Platform platform = Platform.Pc)
+        public async Task<List<League>> GetEventLeaguesAsync(Platform platform = Platform.Pc)
         {
             var request = new Request(User_Agent);
 
@@ -115,7 +116,7 @@ namespace ExileNET.API
         /// <param name="leagueId">The League ID</param>
         /// <param name="platform">The Desired Platform</param>
         /// <returns></returns>
-        public async Task<League> GetLeagueById(string leagueId, Platform platform = Platform.Pc)
+        public async Task<League> GetLeagueByIdAsync(string leagueId, Platform platform = Platform.Pc)
         {
             var request = new Request(User_Agent);
 
@@ -131,7 +132,7 @@ namespace ExileNET.API
         ///     Retrieves a List of All League Rule Sets.
         /// </summary>
         /// <returns></returns>
-        public async Task<List<LeagueRuleSet>> GetAllLeagueRuleSets()
+        public async Task<List<LeagueRuleSet>> GetAllLeagueRuleSetsAsync()
         {
             var request = new Request(User_Agent);
 
@@ -153,7 +154,7 @@ namespace ExileNET.API
         /// </summary>
         /// <param name="ruleSetId">The League Rule Set ID</param>
         /// <returns></returns>
-        public async Task<LeagueRuleSet> GetLeagueRuleSetById(string ruleSetId)
+        public async Task<LeagueRuleSet> GetLeagueRuleSetByIdAsync(string ruleSetId)
         {
             var request = new Request(User_Agent);
 
@@ -168,7 +169,7 @@ namespace ExileNET.API
         /// <param name="ladderId">The Ladder ID (Name)</param>
         /// <param name="platform">The Desired Platform</param>
         /// <returns></returns>
-        public async Task<Ladder> GetLadderById(string ladderId, Platform platform = Platform.Pc)
+        public async Task<Ladder> GetLadderByIdAsync(string ladderId, Platform platform = Platform.Pc)
         {
             var request = new Request(User_Agent);
             var realm = platform.ToString().ToLower();
@@ -176,6 +177,30 @@ namespace ExileNET.API
             await request.Get($"{Api_Url}ladders/{ladderId}?realm={realm}");
 
             return new Ladder(JObject.Parse(request.Response));
+        }
+
+        /// <summary>
+        /// Retrieves the PvP Season by ID
+        /// </summary>
+        /// <param name="seasonId">The Season ID</param>
+        /// <param name="platform">The Desired Platform</param>
+        /// <returns></returns>
+        public async Task<List<Season>> GetPvPSeasonById(string seasonId, Platform platform = Platform.Pc)
+        {
+            var request = new Request(User_Agent);
+            var realm = platform.ToString().ToLower();
+
+            await request.Get($"{Api_Url}pvp-matches?type=season&season={seasonId}&realm={realm}");
+
+            List<Season> seasonList = new List<Season>();
+
+            foreach (JObject obj in JArray.Parse(request.Response))
+            {
+                Season season = new Season(obj);
+                seasonList.Add(season);
+            }
+
+            return seasonList;
         }
     }
 }

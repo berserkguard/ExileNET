@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using ExileNET.API;
 
 namespace ExileNET.Networking
@@ -8,12 +10,12 @@ namespace ExileNET.Networking
         /// <summary>
         ///     The Client User Agent
         /// </summary>
-        private const string User_Agent = "";
+        private const string UserAgent = "";
 
         /// <summary>
         ///     The Path of Exile API Url
         /// </summary>
-        private readonly string Api_Url = "http://api.pathofexile.com/";
+        private const string ApiUrl = "http://api.pathofexile.com/";
 
         /// <summary>
         ///     Gets the Client Connection Status
@@ -22,7 +24,8 @@ namespace ExileNET.Networking
 
         public Client()
         {
-            Api = new ExileAPI(User_Agent, Api_Url);
+            Api = new ExileAPI(UserAgent, ApiUrl);
+
         }
 
         public ExileAPI Api { get; internal set; }
@@ -39,6 +42,32 @@ namespace ExileNET.Networking
         protected virtual void OnConnected(ConnectedEventArgs e)
         {
             Connected?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Verifies the Connection to the Path of Exile API
+        /// </summary>
+        /// <returns></returns>
+        public async Task VerifyConnectionAsync()
+        {
+            var request = new Request(UserAgent);
+
+            var urlToTest = $"{ApiUrl}leagues";
+
+            var status = await request.GetStatusAsync(urlToTest);
+
+            if (status.ToString().StartsWith("2"))
+            {
+                var e = new ConnectedEventArgs
+                {
+                    Status = status,
+                    URL = urlToTest
+                };
+
+                IsConnected = true;
+
+                OnConnected(e);
+            }
         }
     }
 }
