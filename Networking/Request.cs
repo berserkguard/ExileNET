@@ -73,13 +73,17 @@ namespace ExileNET.Networking
                 var Headers = webResponse.Headers;
                 ResponseStream = webResponse.GetResponseStream();
 
-                using var reader = new StreamReader(webResponse.GetResponseStream());
-                var response = await reader.ReadToEndAsync();
+                using (var reader = new StreamReader(webResponse.GetResponseStream()))
+                {
+                    var response = await reader.ReadToEndAsync();
 
-                Status = (int) webResponse.StatusCode;
-                Response = response;
+                    Status = (int)webResponse.StatusCode;
+                    Response = response;
 
-                HeaderCollection = Headers;
+                    HeaderCollection = Headers;
+                }
+
+               
             }
             catch (WebException e)
             {
@@ -110,20 +114,26 @@ namespace ExileNET.Networking
 
                 var post = JsonConvert.SerializeObject(data);
 
-                await using var writer = new StreamWriter(webRequest.GetRequestStream());
-                await writer.WriteAsync(post);
-                await writer.FlushAsync();
-                writer.Close();
+                using (var writer = new StreamWriter(webRequest.GetRequestStream()))
+                {
+                    await writer.WriteAsync(post);
+                    await writer.FlushAsync();
+                    writer.Close();
+                }
 
                 var webResponse = (HttpWebResponse) await webRequest.GetResponseAsync();
                 var header = webResponse.Headers;
                 ResponseStream = webResponse.GetResponseStream();
 
-                using var reader = new StreamReader(webResponse.GetResponseStream());
-                var response = await reader.ReadToEndAsync();
-                Response = response;
-                HeaderCollection = header;
-                URL = webResponse.ResponseUri.ToString();
+                using (var reader = new StreamReader(webResponse.GetResponseStream()))
+                {
+                    var response = await reader.ReadToEndAsync();
+                    Response = response;
+                    HeaderCollection = header;
+                    URL = webResponse.ResponseUri.ToString();
+                }
+
+              
             }
             catch (WebException e)
             {
