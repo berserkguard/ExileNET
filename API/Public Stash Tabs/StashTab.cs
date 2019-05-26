@@ -20,7 +20,8 @@ namespace ExileNET.API.PublicStashTabs
             if (rawData["Stash Tab"] != null)
                 StashName = rawData["Stash Tab"].ToString();
             if (rawData["stashType"] != null)
-                StashType = Enum.Parse<StashType>(rawData["stashType"].ToString());
+                StashType = (StashType) Enum.Parse(typeof(StashType),rawData["stashType"].ToString());
+            
             if (rawData["league"] != null)
                 League = rawData["league"].ToString();
             if (rawData["items"] != null && rawData["items"].HasValues)

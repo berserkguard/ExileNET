@@ -4,7 +4,7 @@ A C# Wrapper for the Path of Exile Public API
 ## Installation
 > Install-Package ExileNet
 ## Requirements
-* .Net Core >= 2.2
+* .Net Standard >= 2.0
 * Newtonsoft.Json >= 12.0.2
 
 ## Usage and Examples
