@@ -29,7 +29,7 @@ This returns a List of All Current Leagues on the given Platform. Platform param
 ```csharp
 var ladder = await client.Api.GetLadderByIdAsync("Standard", Platform.Xbox);
 ```
-This returns a Ladder Object for the Standard Xbox Ladder, which contains a cache date and a list of Ladder Entries.
+This returns a Ladder Object for the given Ladder ID and Platform, which contains a cache date and a list of Ladder Entries.
 
 ### PvP
 ```csharp
