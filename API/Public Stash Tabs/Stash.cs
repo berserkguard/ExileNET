@@ -11,11 +11,11 @@ namespace ExileNET.API.PublicStashTabs
                 NextChangeId = rawData["next_change_id"].ToString();
             if (rawData["stashes"] != null && rawData["stashes"].HasValues)
             {
-                Stashes = new List<StashTab>();
+                Entries = new List<StashTab>();
                 foreach (JObject obj in rawData["stashes"])
                 {
                     var stash = new StashTab(obj);
-                    Stashes.Add(stash);
+                    Entries.Add(stash);
                 }
             }
         }
@@ -28,6 +28,6 @@ namespace ExileNET.API.PublicStashTabs
         /// <summary>
         ///     The Retrieved Stashes
         /// </summary>
-        public List<StashTab> Stashes { get; internal set; }
+        public List<StashTab> Entries { get; internal set; }
     }
 }
