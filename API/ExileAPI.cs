@@ -28,7 +28,7 @@ namespace ExileNET.API
         /// <returns></returns>
         public async Task<Stash> GetPublicStashesAsync(string nextChangeId = null)
         {
-            Request request = new Request(User_Agent);
+            var request = new Request(User_Agent);
             if (nextChangeId == null)
                 await request.Get($"{Api_Url}public-stash-tabs/");
             else
@@ -44,7 +44,7 @@ namespace ExileNET.API
         /// <returns></returns>
         public async Task<List<League>> GetAllLeaguesAsync(Platform platform = Platform.Pc)
         {
-            Request request = new Request(User_Agent);
+            var request = new Request(User_Agent);
 
             string realm = platform.ToString().ToLower();
 
@@ -69,7 +69,7 @@ namespace ExileNET.API
         /// <returns></returns>
         public async Task<List<League>> GetLeaguesBySeasonAsync(string season, Platform platform = Platform.Pc)
         {
-            Request request = new Request(User_Agent);
+            var request = new Request(User_Agent);
 
             string realm = platform.ToString().ToLower();
 
@@ -93,7 +93,7 @@ namespace ExileNET.API
         /// <returns></returns>
         public async Task<List<League>> GetEventLeaguesAsync(Platform platform = Platform.Pc)
         {
-            Request request = new Request(User_Agent);
+            var request = new Request(User_Agent);
 
             string realm = platform.ToString().ToLower();
 
@@ -118,7 +118,7 @@ namespace ExileNET.API
         /// <returns></returns>
         public async Task<League> GetLeagueByIdAsync(string leagueId, Platform platform = Platform.Pc)
         {
-            Request request = new Request(User_Agent);
+            var request = new Request(User_Agent);
 
             string realm = platform.ToString().ToLower();
 
@@ -134,7 +134,7 @@ namespace ExileNET.API
         /// <returns></returns>
         public async Task<List<LeagueRuleSet>> GetAllLeagueRuleSetsAsync()
         {
-            Request request = new Request(User_Agent);
+            var request = new Request(User_Agent);
 
             await request.Get($"{Api_Url}league-rules");
 
@@ -156,7 +156,7 @@ namespace ExileNET.API
         /// <returns></returns>
         public async Task<LeagueRuleSet> GetLeagueRuleSetByIdAsync(string ruleSetId)
         {
-            Request request = new Request(User_Agent);
+            var request = new Request(User_Agent);
 
             await request.Get($"{Api_Url}league-rules/{ruleSetId}");
 
@@ -171,7 +171,7 @@ namespace ExileNET.API
         /// <returns></returns>
         public async Task<Ladder> GetLadderByIdAsync(string ladderId, Platform platform = Platform.Pc)
         {
-            Request request = new Request(User_Agent);
+            var request = new Request(User_Agent);
             string realm = platform.ToString().ToLower();
 
             await request.Get($"{Api_Url}ladders/{ladderId}?realm={realm}");
@@ -187,7 +187,7 @@ namespace ExileNET.API
         /// <returns></returns>
         public async Task<List<Season>> GetPvPSeasonById(string seasonId, Platform platform = Platform.Pc)
         {
-            Request request = new Request(User_Agent);
+            var request = new Request(User_Agent);
             string realm = platform.ToString().ToLower();
 
             await request.Get($"{Api_Url}pvp-matches?type=season&season={seasonId}&realm={realm}");
