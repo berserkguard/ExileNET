@@ -16,7 +16,7 @@ namespace ExileNET.Ladders
                 Entries = new List<Entry>();
                 foreach (JObject obj in rawData["entries"])
                 {
-                    var entry = new Entry(obj);
+                    Entry entry = new Entry(obj);
                     Entries.Add(entry);
                 }
             }

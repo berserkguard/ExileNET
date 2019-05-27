@@ -28,7 +28,7 @@ namespace ExileNET.Leagues
                 Rules = new List<LeagueRuleSet>();
                 foreach (JObject obj in rawData["rules"])
                 {
-                    var ruleSet = new LeagueRuleSet(obj);
+                    LeagueRuleSet ruleSet = new LeagueRuleSet(obj);
                     Rules.Add(ruleSet);
                 }
             }

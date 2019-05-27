@@ -52,13 +52,13 @@ namespace ExileNET.Networking
         {
             var request = new Request(UserAgent);
 
-            var urlToTest = $"{ApiUrl}leagues";
+            string urlToTest = $"{ApiUrl}leagues";
 
-            var status = await request.GetStatusAsync(urlToTest);
+            int status = await request.GetStatusAsync(urlToTest);
 
             if (status.ToString().StartsWith("2"))
             {
-                var e = new ConnectedEventArgs
+                ConnectedEventArgs e = new ConnectedEventArgs
                 {
                     Status = status,
                     URL = urlToTest

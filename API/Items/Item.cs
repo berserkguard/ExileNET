@@ -26,7 +26,7 @@ namespace ExileNET.API.Items
                 Sockets = new List<Socket>();
                 foreach (JObject obj in rawData["sockets"])
                 {
-                    var socket = new Socket(obj);
+                    Socket socket = new Socket(obj);
                     Sockets.Add(socket);
                 }
             }
@@ -46,7 +46,7 @@ namespace ExileNET.API.Items
                 Properties = new List<ItemProperty>();
                 foreach (JObject obj in rawData["properties"])
                 {
-                    var property = new ItemProperty(obj);
+                    ItemProperty property = new ItemProperty(obj);
                     Properties.Add(property);
                 }
             }
@@ -56,7 +56,7 @@ namespace ExileNET.API.Items
                 AdditionalProperties = new List<ItemProperty>();
                 foreach (JObject obj in rawData["additionalProperties"])
                 {
-                    var property = new ItemProperty(obj);
+                    ItemProperty property = new ItemProperty(obj);
                     AdditionalProperties.Add(property);
                 }
             }
@@ -66,7 +66,7 @@ namespace ExileNET.API.Items
                 Requirements = new List<ItemRequirement>();
                 foreach (JObject obj in rawData["requirements"])
                 {
-                    var requirement = new ItemRequirement(obj);
+                    ItemRequirement requirement = new ItemRequirement(obj);
                     Requirements.Add(requirement);
                 }
             }
@@ -76,7 +76,7 @@ namespace ExileNET.API.Items
                 NextLevelRequirements = new List<ItemRequirement>();
                 foreach (JObject obj in rawData["nextLevelRequirements"])
                 {
-                    var requirement = new ItemRequirement(obj);
+                    ItemRequirement requirement = new ItemRequirement(obj);
                     NextLevelRequirements.Add(requirement);
                 }
             }
@@ -120,7 +120,7 @@ namespace ExileNET.API.Items
                 SocketedItems = new List<Item>();
                 foreach (JObject obj in rawData["socketedItems"])
                 {
-                    var item = new Item(obj);
+                    Item item = new Item(obj);
                     SocketedItems.Add(item);
                 }
             }

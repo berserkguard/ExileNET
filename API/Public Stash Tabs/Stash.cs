@@ -14,7 +14,7 @@ namespace ExileNET.API.PublicStashTabs
                 Entries = new List<StashTab>();
                 foreach (JObject obj in rawData["stashes"])
                 {
-                    var stash = new StashTab(obj);
+                    StashTab stash = new StashTab(obj);
                     Entries.Add(stash);
                 }
             }

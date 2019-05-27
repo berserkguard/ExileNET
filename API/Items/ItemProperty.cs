@@ -14,7 +14,7 @@ namespace ExileNET.API.Items
                 Values = new List<ItemValue>();
                 foreach (JObject obj in rawData["values"])
                 {
-                    var value = new ItemValue(obj);
+                    ItemValue value = new ItemValue(obj);
                     Values.Add(value);
                 }
             }

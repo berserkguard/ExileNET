@@ -14,7 +14,7 @@ namespace ExileNET.API.Items
                 Properties = new List<ItemProperty>();
                 foreach (JObject obj in rawData["properties"])
                 {
-                    var property = new ItemProperty(obj);
+                    ItemProperty property = new ItemProperty(obj);
                     Properties.Add(property);
                 }
             }

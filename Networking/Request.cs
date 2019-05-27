@@ -30,11 +30,11 @@ namespace ExileNET.Networking
         {
             try
             {
-                var webRequest = (HttpWebRequest) WebRequest.Create(url);
+                HttpWebRequest webRequest = (HttpWebRequest) WebRequest.Create(url);
                 webRequest.Method = "GET";
                 webRequest.UserAgent = User_Agent;
 
-                var webResponse = (HttpWebResponse) await webRequest.GetResponseAsync();
+                HttpWebResponse webResponse = (HttpWebResponse) await webRequest.GetResponseAsync();
 
                 return (int) webResponse.StatusCode;
             }
@@ -58,7 +58,7 @@ namespace ExileNET.Networking
         {
             try
             {
-                var webRequest = (HttpWebRequest) WebRequest.Create(url);
+                HttpWebRequest webRequest = (HttpWebRequest) WebRequest.Create(url);
 
                 webRequest.Method = "GET";
                 webRequest.UserAgent = User_Agent;
@@ -66,16 +66,16 @@ namespace ExileNET.Networking
                 webRequest.AllowAutoRedirect = false;
 
                 if (collection != null)
-                    for (var i = 0; i < collection.Count; i++)
+                    for (int i = 0; i < collection.Count; i++)
                         webRequest.Headers.Add(collection.Keys[i], collection.Get(i));
 
-                var webResponse = (HttpWebResponse) await webRequest.GetResponseAsync();
-                var Headers = webResponse.Headers;
+                HttpWebResponse webResponse = (HttpWebResponse) await webRequest.GetResponseAsync();
+                WebHeaderCollection Headers = webResponse.Headers;
                 ResponseStream = webResponse.GetResponseStream();
 
-                using (var reader = new StreamReader(webResponse.GetResponseStream()))
+                using (StreamReader reader = new StreamReader(webResponse.GetResponseStream()))
                 {
-                    var response = await reader.ReadToEndAsync();
+                    string response = await reader.ReadToEndAsync();
 
                     Status = (int)webResponse.StatusCode;
                     Response = response;
@@ -103,31 +103,31 @@ namespace ExileNET.Networking
         {
             try
             {
-                var webRequest = (HttpWebRequest) WebRequest.Create(url);
+                HttpWebRequest webRequest = (HttpWebRequest) WebRequest.Create(url);
                 webRequest.Method = "POST";
                 webRequest.UserAgent = User_Agent;
                 webRequest.ContentType = "application/json";
 
                 if (collection != null)
-                    for (var i = 0; i < collection.Count; i++)
+                    for (int i = 0; i < collection.Count; i++)
                         webRequest.Headers.Add(collection.Keys[i], collection.Get(i));
 
-                var post = JsonConvert.SerializeObject(data);
+                string post = JsonConvert.SerializeObject(data);
 
-                using (var writer = new StreamWriter(webRequest.GetRequestStream()))
+                using (StreamWriter writer = new StreamWriter(webRequest.GetRequestStream()))
                 {
                     await writer.WriteAsync(post);
                     await writer.FlushAsync();
                     writer.Close();
                 }
 
-                var webResponse = (HttpWebResponse) await webRequest.GetResponseAsync();
-                var header = webResponse.Headers;
+                HttpWebResponse webResponse = (HttpWebResponse) await webRequest.GetResponseAsync();
+                WebHeaderCollection header = webResponse.Headers;
                 ResponseStream = webResponse.GetResponseStream();
 
-                using (var reader = new StreamReader(webResponse.GetResponseStream()))
+                using (StreamReader reader = new StreamReader(webResponse.GetResponseStream()))
                 {
-                    var response = await reader.ReadToEndAsync();
+                    string response = await reader.ReadToEndAsync();
                     Response = response;
                     HeaderCollection = header;
                     URL = webResponse.ResponseUri.ToString();

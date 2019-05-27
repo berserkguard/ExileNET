@@ -29,7 +29,7 @@ namespace ExileNET.API.PublicStashTabs
                 Items = new List<Item>();
                 foreach (JObject obj in rawData["items"])
                 {
-                    var item = new Item(obj);
+                    Item item = new Item(obj);
                     Items.Add(item);
                 }
             }
