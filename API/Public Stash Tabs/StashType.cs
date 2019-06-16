@@ -2,7 +2,13 @@
 {
     public enum StashType
     {
-        Premium,
-        Normal
+        NormalStash,
+        PremiumStash,
+        QuadStash,
+        EssenceStash,
+        CurrencyStash,
+        MapStash,
+        FragmentStash,
+
     }
 }
