@@ -12,9 +12,9 @@ namespace ExileNET.API.Items
             if (rawData["values"] != null && rawData["values"].HasValues)
             {
                 Values = new List<ItemValue>();
-                foreach (JObject obj in rawData["values"])
+                foreach (JArray arr in rawData["values"])
                 {
-                    ItemValue value = new ItemValue(obj);
+                    ItemValue value = new ItemValue(arr);
                     Values.Add(value);
                 }
             }

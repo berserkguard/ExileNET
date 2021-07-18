@@ -14,7 +14,7 @@ namespace ExileNET.API.Items
             if (rawData["h"] != null)
                 Height = int.Parse(rawData["h"].ToString());
             if (rawData["ilvl"] != null)
-                iLevel = int.Parse(rawData["ilvl"].ToString());
+                ItemLevel = int.Parse(rawData["ilvl"].ToString());
             if (rawData["icon"] != null)
                 IconPath = rawData["icon"].ToString();
             if (rawData["support"] != null)
@@ -38,7 +38,7 @@ namespace ExileNET.API.Items
             if (rawData["typeLine"] != null)
                 Type = rawData["typeLine"].ToString();
             if (rawData["identified"] != null)
-                Indentified = bool.Parse(rawData["identified"].ToString());
+                Identified = bool.Parse(rawData["identified"].ToString());
             if (rawData["corrupted"] != null)
                 Corrupted = bool.Parse(rawData["corrupted"].ToString());
             if (rawData["properties"] != null && rawData["properties"].HasValues)
@@ -147,7 +147,7 @@ namespace ExileNET.API.Items
         /// <summary>
         ///     The Item Level
         /// </summary>
-        public int iLevel { get; internal set; }
+        public int ItemLevel { get; internal set; }
 
         /// <summary>
         ///     The Items Icon Path
@@ -189,7 +189,7 @@ namespace ExileNET.API.Items
         /// <summary>
         ///     The Items Identification Status
         /// </summary>
-        public bool Indentified { get; internal set; }
+        public bool Identified { get; internal set; }
 
         /// <summary>
         ///     The Items Corruption Status

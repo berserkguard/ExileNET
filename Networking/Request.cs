@@ -59,15 +59,29 @@ namespace ExileNET.Networking
             try
             {
                 HttpWebRequest webRequest = (HttpWebRequest) WebRequest.Create(url);
-
                 webRequest.Method = "GET";
                 webRequest.UserAgent = User_Agent;
                 webRequest.ContentType = "application/json";
                 webRequest.AllowAutoRedirect = false;
 
                 if (collection != null)
+                {
                     for (int i = 0; i < collection.Count; i++)
-                        webRequest.Headers.Add(collection.Keys[i], collection.Get(i));
+                    {
+                        if (collection.Keys[i].Equals("POESESSID"))
+                        {
+                            webRequest.CookieContainer = new CookieContainer();
+                            webRequest.CookieContainer.Add(new Cookie(collection.Keys[i], collection.Get(i))
+                            {
+                                Domain = new Uri(url).Host
+                            });
+                        }
+                        else
+                        {
+                            webRequest.Headers.Add(collection.Keys[i], collection.Get(i));
+                        }
+                    }
+                }
 
                 HttpWebResponse webResponse = (HttpWebResponse) await webRequest.GetResponseAsync();
                 WebHeaderCollection Headers = webResponse.Headers;
@@ -109,8 +123,19 @@ namespace ExileNET.Networking
                 webRequest.ContentType = "application/json";
 
                 if (collection != null)
+                {
                     for (int i = 0; i < collection.Count; i++)
-                        webRequest.Headers.Add(collection.Keys[i], collection.Get(i));
+                    {
+                        if (collection.Keys[i].Equals("POESESSID"))
+                        {
+                            webRequest.CookieContainer.Add(new Cookie(collection.Keys[i], collection.Get(i)));
+                        }
+                        else
+                        {
+                            webRequest.Headers.Add(collection.Keys[i], collection.Get(i));
+                        }
+                    }
+                }
 
                 string post = JsonConvert.SerializeObject(data);
 

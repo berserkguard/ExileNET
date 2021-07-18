@@ -38,6 +38,25 @@ namespace ExileNET.API
         }
 
         /// <summary>
+        ///     Retrieves the specified account's stash tab for the given index (within the character's league).
+        /// </summary>
+        /// <returns></returns>
+        public async Task<StashTab> GetAccountStashTabAsync(string poesessid, string accountName, string realm, string league, int tabIdx, bool includeTabs = false)
+        {
+            var request = new Request(User_Agent);
+
+            var headers = new System.Net.WebHeaderCollection();
+            headers.Add("POESESSID", poesessid);
+
+            string tabs = (includeTabs ? "1" : "0");
+            var endpoint = $"{Api_Url}character-window/get-stash-items?accountName={accountName}&realm={realm}&league={league}&tabIndex={tabIdx}&tabs={tabs}";
+
+            await request.Get(endpoint, headers);
+
+            return new StashTab(JObject.Parse(request.Response));
+        }
+
+        /// <summary>
         ///     Retrieves a List of All Leagues on the Desired Platform (Default PC)
         /// </summary>
         /// <param name="platform">The Desired Platform</param>
